@@ -1,12 +1,12 @@
-# TypeScript Note App
+# SSO Authentication Service
 
-A simple note-taking REST API built with Node.js, TypeScript, Express, Mongoose, and MongoDB.
+This application is built to provide Single Sign-On (SSO) authentication for your website. It uses Node.js, TypeScript, Express, Mongoose, and MongoDB to manage user authentication securely and efficiently.
 
 ## Features
 
-- Create, read, update, and delete notes
-- TypeScript for type safety
-- MongoDB for data storage
+- Single Sign-On (SSO) authentication for your website
+- Secure user management with MongoDB
+- Built with TypeScript for type safety
 
 ## Setup
 
@@ -14,17 +14,19 @@ A simple note-taking REST API built with Node.js, TypeScript, Express, Mongoose,
    ```bash
    npm install
    ```
-2. **Set up MongoDB:**
-
+2. **Configure environment:**
+   - Create a `.env` file with your MongoDB URI and desired port:
+     ```env
+     MONGO_URI=mongodb://localhost:27017/sso-auth
+     PORT=3000
+     ```
+3. **Set up MongoDB:**
    - Make sure MongoDB is running locally, or set the `MONGO_URI` environment variable to your MongoDB connection string.
-
-3. **Run in development mode:**
-
+4. **Run in development mode:**
    ```bash
    npm run dev
    ```
-
-4. **Build and run:**
+5. **Build and run:**
    ```bash
    npm run build
    npm start
@@ -32,17 +34,14 @@ A simple note-taking REST API built with Node.js, TypeScript, Express, Mongoose,
 
 ## API Endpoints
 
-- `GET /api/notes` - List all notes
-- `GET /api/notes/:id` - Get a single note
-- `POST /api/notes` - Create a new note
-- `PUT /api/notes/:id` - Update a note
-- `DELETE /api/notes/:id` - Delete a note
+Endpoints will be provided for SSO authentication, user registration, login, and session management. Please refer to the code for current routes and update as needed for your website's requirements.
 
 ## Project Structure
 
 ```
 src/
-  index.ts         # Entry point
-  models/Note.ts   # Mongoose Note model
-  routes/notes.ts  # Notes API routes
+   index.ts         # Entry point
+   models/Note.ts   # Mongoose User/Note model
+   routes/notes.ts  # API routes
+   lib/connectDb.ts # Database connection logic
 ```
