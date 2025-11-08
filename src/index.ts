@@ -5,23 +5,29 @@ import mongoose from "mongoose";
 
 import dotenv from "dotenv";
 import router from "./services/passport";
-import authRouter from "./routes/authRoutes";
-
+import { connectDb } from "./lib/connectDb";
+import tokenRouter from "./routes/tokenRoutes";
+import cors from "cors";
 dotenv.config();
 
 const app = express();
 
-// DB connect
-mongoose.connect(process.env.MONGO_URI!).then(() => {
-  console.log("MongoDB connected ✅");
-});
+connectDb();
+app.use(
+  cors({
+    origin: "http://localhost:3001",
+    methods: ["GET", "POST"],
+    credentials: true,
+  })
+);
 
-// middleware
+app.use(express.json());
 app.use(
   session({
-    secret: "yourSecret",
+    secret: process.env.SESSION_SECRET || "dev",
     resave: false,
     saveUninitialized: false,
+    cookie: { secure: false, sameSite: "lax" }, // secure:true breaks localhost http
   })
 );
 app.use(passport.initialize());
@@ -29,6 +35,8 @@ app.use(passport.session());
 
 // routes
 app.use("/auth", router);
+
+app.use("/token", tokenRouter);
 
 app.get("/", (req, res) => {
   res.send("Home Page 🚀 <a href='/auth/google'>Login with Google</a>");
